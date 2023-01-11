@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="card_title">
+
+        <item name="android:textSize">
+            18sp
+        </item>
+
+        <item name="android:letterSpacing">
+            -0.05
+        </item>
+
+        <item name="android:textColor">
+            #26282B
+        </item>
+
+    </style>
+
+    <style name="login_edit" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">#D80C18</item>
+        <item name="colorControlNormal">@color/cardview_dark_background</item>
+    </style>
+
+    <style name="AnimationPopupStyle">
+        <item name="android:windowEnterAnimation">@anim/open</item>
+        <item name="android:windowExitAnimation">@anim/close</item>
+    </style>
+</resources>
