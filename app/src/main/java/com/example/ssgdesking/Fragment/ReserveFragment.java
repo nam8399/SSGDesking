@@ -875,6 +875,256 @@ public class ReserveFragment extends Fragment implements onBackPressedListener {
             }
         });
 
+        binding.floor1551.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1551.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-1", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1551.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1552.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1552.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-2", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1552.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1553.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1553.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-3", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1553.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1554.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1554.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-4", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1554.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1555.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1555.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-5", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1555.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1556.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1556.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-6", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1556.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1557.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1557.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-7", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1557.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1558.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1558.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-8", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1558.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1559.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1559.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 5-9", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1559.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
+        binding.floor1561.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 임의의 데이터입니다.
+                List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
+                List<String> listContent = Arrays.asList(
+                        "이 자리 좋아요.",
+                        "잠잘수 있는 최고의 자리.",
+                        "시몬스 침대.",
+                        "이 자리에 앉고 인생이 폈습니다."
+                );
+
+                binding.floor1561.setBackgroundResource(R.drawable.reserve_seat_green);
+                ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), "15층 6-1", addCommentData(listTitle, listContent));
+                dialog.show();
+
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        binding.floor1561.setBackgroundResource(R.drawable.reserve_seat_red);
+                    }
+                });
+            }
+        });
+
 
     }
 
