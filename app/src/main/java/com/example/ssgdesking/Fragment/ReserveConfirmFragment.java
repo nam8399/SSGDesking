@@ -66,7 +66,7 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
         cal.add(Calendar.HOUR, 9);
 
         reserveResultActivity = ReserveResultActivity.getInstance();
-        binding.reserveConfirmInfo.setText("15F / " + reserveResultActivity.reserveInfo + "번");
+        binding.reserveConfirmInfo.setText(reserveResultActivity.reserveInfo + "번");
         binding.reserveConfirmStarttime.setText(getTime());
         binding.reserveConfirmEndtime.setText(mFormat.format(cal.getTime()));
 

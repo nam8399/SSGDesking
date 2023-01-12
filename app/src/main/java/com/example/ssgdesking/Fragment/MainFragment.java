@@ -67,17 +67,7 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                Handler handler = new Handler(Looper.getMainLooper());
-                progressDialog.show();
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                        fragmentTransaction.replace(R.id.fragmentFrame, reserveFragment).commit();
-                    }
-                },3000);
+                fragmentTransaction.replace(R.id.fragmentFrame, reserveFragment).commit();
             }
         });
 

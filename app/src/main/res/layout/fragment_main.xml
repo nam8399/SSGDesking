@@ -108,7 +108,7 @@
                 android:textSize="15dp"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:text="15층">
+                android:text="19층">
             </TextView>
             <TextView
                 android:layout_width="180dp"

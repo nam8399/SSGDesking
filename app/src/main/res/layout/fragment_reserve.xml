@@ -94,53 +94,10 @@
                             android:background="@drawable/reserve_seat_gray">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_1_7"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_gray">
-                        </Button>
-                        <Button
-                            android:id="@+id/floor_19_1_8"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_gray">
-                        </Button>
-                        <Button
-                            android:id="@+id/floor_19_1_9"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_gray">
-                        </Button>
-                        <Button
-                            android:id="@+id/floor_19_1_10"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_gray">
-                        </Button>
-                        <Button
-                            android:id="@+id/floor_19_1_11"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_gray">
-                        </Button>
-                        <Button
-                            android:id="@+id/floor_19_1_12"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_gray">
-                        </Button>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <Button
                             android:id="@+id/floor_19_2_1"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="25dp"
                             android:background="@drawable/reserve_seat_gray">
                         </Button>
                         <Button
@@ -154,23 +111,66 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_gray">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_4"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_gray">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_5"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_gray">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_6"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:background="@drawable/reserve_seat_gray">
+                        </Button>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/floor_19_1_7"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/reserve_seat_gray">
+                        </Button>
+                        <Button
+                            android:id="@+id/floor_19_1_8"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:background="@drawable/reserve_seat_gray">
+                        </Button>
+                        <Button
+                            android:id="@+id/floor_19_1_9"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/reserve_seat_red">
+                        </Button>
+                        <Button
+                            android:id="@+id/floor_19_1_10"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:background="@drawable/reserve_seat_red">
+                        </Button>
+                        <Button
+                            android:id="@+id/floor_19_1_11"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:layout_marginLeft="25dp"
+                            android:background="@drawable/reserve_seat_red">
+                        </Button>
+                        <Button
+                            android:id="@+id/floor_19_1_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
@@ -255,21 +255,21 @@
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_3_5"
+                            android:id="@+id/floor_19_4_1"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_3_6"
+                            android:id="@+id/floor_19_4_2"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_3_7"
+                            android:id="@+id/floor_19_4_3"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
@@ -279,20 +279,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/floor_19_4_1"
+                            android:id="@+id/floor_19_3_5"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_4_2"
+                            android:id="@+id/floor_19_3_6"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_gray">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_4_3"
+                            android:id="@+id/floor_19_3_7"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
+                            android:background="@drawable/reserve_seat_red">
+                        </Button>
+                        <Button
+                            android:id="@+id/floor_19_3_8"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
@@ -301,6 +307,7 @@
                             android:id="@+id/floor_19_4_4"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
+                            android:layout_marginLeft="25dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
@@ -312,13 +319,6 @@
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_6"
-                            android:layout_width="37dp"
-                            android:layout_height="37dp"
-                            android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
-                        </Button>
-                        <Button
-                            android:id="@+id/floor_19_4_7"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
@@ -339,51 +339,51 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/floor_19_5_1"
+                            android:id="@+id/floor_19_3_9"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_2"
+                            android:id="@+id/floor_19_3_10"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_3"
+                            android:id="@+id/floor_19_3_11"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_4"
+                            android:id="@+id/floor_19_3_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_5"
+                            android:id="@+id/floor_19_4_7"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_6"
+                            android:id="@+id/floor_19_4_8"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_7"
+                            android:id="@+id/floor_19_4_9"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_5_8"
+                            android:id="@+id/floor_19_4_10"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
@@ -393,51 +393,51 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <Button
-                            android:id="@+id/floor_19_6_1"
+                            android:id="@+id/floor_19_3_13"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_2"
+                            android:id="@+id/floor_19_3_14"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_3"
+                            android:id="@+id/floor_19_3_15"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_4"
+                            android:id="@+id/floor_19_3_16"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_5"
+                            android:id="@+id/floor_19_4_11"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_6"
+                            android:id="@+id/floor_19_4_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_7"
+                            android:id="@+id/floor_19_4_13"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
                         </Button>
                         <Button
-                            android:id="@+id/floor_19_6_8"
+                            android:id="@+id/floor_19_4_14"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:background="@drawable/reserve_seat_red">
@@ -520,6 +520,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
+            <ImageView
+                android:id="@+id/btn_refresh"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/icon_refresh"
+                android:background="@drawable/btn_refresh"
+                android:padding="8dp"
+                android:elevation="3dp">
+            </ImageView>
             <LinearLayout
                 android:id="@+id/btn_search"
                 android:layout_width="270dp"
