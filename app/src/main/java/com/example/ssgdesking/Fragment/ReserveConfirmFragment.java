@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.ssgdesking.Activity.LoginActivity;
 import com.example.ssgdesking.Activity.MainActivity;
 import com.example.ssgdesking.Activity.ReserveResultActivity;
+import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.Data.ReservationLoginData;
 import com.example.ssgdesking.Interface.onBackPressedListener;
 import com.example.ssgdesking.R;
@@ -99,26 +100,6 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
         binding.reserveConfirmOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-//
-//                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-//
-//                Handler handler = new Handler(Looper.getMainLooper());
-//                progressDialog.show();
-//
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        progressDialog.dismiss();
-//                        bundle.putString("SeatNumber", reserveResultActivity.reserveInfo);
-//                        bundle.putString("SeatTime", mFormat_bundle.format(cal.getTime()));
-//                        reserveSuccessFragment.setArguments(bundle);
-//                        fragmentTransaction.replace(R.id.fragmentFrame, reserveSuccessFragment).commit();
-//                    }
-//                },5000);
-
                 reservePost(reserveResultActivity.reserveSeatID);
             }
         });
@@ -126,20 +107,39 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
 
     public void reservePost(String empno){
         Log.d("empno : ", empno);
+        LoginData loginData = new LoginData(LoginActivity.LOGIN_DATA);
         //Retrofit 호출
-        Call<String> call = Retrofit_client.getApiService().reservePost(empno);
+        Call<String> call = Retrofit_client.getApiService().reservePost(empno, loginData);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if(!response.isSuccessful()){
-                    Log.e("연결이 비정상적 : ", "error code : " + response.code());
+                    Log.e("예약확인 - 연결이 비정상적 : ", "error code : " + response.code());
                     Log.d("response : ", response.toString());
                     return;
                 }
                 String checkAlready = response.body();
                 Log.d("연결이 성공적 : ", response.body().toString());
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
+
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+
+                Handler handler = new Handler(Looper.getMainLooper());
+                progressDialog.show();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        bundle.putString("SeatNumber", reserveResultActivity.reserveInfo);
+                        bundle.putString("SeatTime", mFormat_bundle.format(cal.getTime()));
+                        reserveSuccessFragment.setArguments(bundle);
+                        fragmentTransaction.replace(R.id.fragmentFrame, reserveSuccessFragment).commit();
+                    }
+                });
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {

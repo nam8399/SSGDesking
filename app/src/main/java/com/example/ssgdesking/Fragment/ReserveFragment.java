@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -17,10 +18,13 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.ssgdesking.Activity.LoginActivity;
 import com.example.ssgdesking.Adapter.CustomSpinnerAdapter;
+import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.Data.ReservationDTO;
 import com.example.ssgdesking.Data.ReserveCommentData;
 import com.example.ssgdesking.Data.RetrofitSeatData;
+import com.example.ssgdesking.Data.ReviewData;
 import com.example.ssgdesking.Interface.onBackPressedListener;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.Retrofit.Retrofit_client;
@@ -48,6 +52,7 @@ import retrofit2.Response;
 public class ReserveFragment extends Fragment implements onBackPressedListener, View.OnClickListener, Runnable {
     private FragmentReserveBinding binding;
     MainFragment mainFragment;
+    Reserve21Fragment reserve21Fragment;
     private ProgressDialog progressDialog;
     private boolean HTTP_OK = false;
     private boolean VIEW_HTTP_OK = false;
@@ -55,8 +60,10 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     private String section = "";
     private String location = "";
     private RetrofitSeatData retrofitSeatData;
+    private LoginData mLoginData;
     ArrayList<ReservationDTO> items;
     ArrayList<ReservationDTO> viewItems;
+    ArrayList<ReviewData> reviewItems;
     Call<RetrofitSeatData> call;
     private final String TAG = this.getClass().getSimpleName();
 
@@ -86,6 +93,8 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentReserveBinding.inflate(inflater);
+        getUserData();
+
         initView();
 
         controller();
@@ -94,6 +103,8 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     }
 
     private void initView() {
+        reserve21Fragment = new Reserve21Fragment();
+
         initSpinner();
 
         Handler progressHandler = new Handler(Looper.getMainLooper());
@@ -168,21 +179,25 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                if (VIEW_HTTP_OK) {
+                                try {
+                                    if (VIEW_HTTP_OK) {
 
-                                    for (ReservationDTO dto : viewItems) {
-                                        if (dto.getOccupied().equals("true")) {
-                                            setReserveColorGray(dto.getSection(), dto.getLocation());
-                                        } else {
-                                            setReserveColorRed(dto.getSection(), dto.getLocation());
+                                        for (ReservationDTO dto : viewItems) {
+                                            if (dto.getOccupied().equals("true")) {
+                                                setReserveColorGray(dto.getSection(), dto.getLocation());
+                                            } else {
+                                                setReserveColorRed(dto.getSection(), dto.getLocation());
+                                            }
                                         }
+                                        progressHandler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                progressDialog.dismiss();
+                                            }
+                                        });
                                     }
-                                    progressHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressDialog.dismiss();
-                                        }
-                                    });
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
                         });
@@ -224,12 +239,12 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String otherItem = (String) spinner.getItemAtPosition(position);
-                Toast.makeText(getContext(), "선택한 아이템 : " + otherItem, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "선택한 아이템 : " + otherItem, Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "getItemAtPosition() - 선택한 아이템 : " + otherItem);
                 switch (otherItem) {
                     case "21F":{
                         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.fragmentFrame, mainFragment).commit();
+                        fragmentManager.beginTransaction().replace(R.id.fragmentFrame, reserve21Fragment).commit();
                         break;
                     }
 
@@ -885,7 +900,11 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                       connectSetting();
+                        try {
+                            connectSetting();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             } catch (Exception e) {
@@ -915,6 +934,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 if (isReserve && dto.getOccupied().equals("true")) { // 좌석에 앉는 사람이 있울 시
                     getReserveData(dto.getId(), reserve_title, dto);
                 } else if(isReserve && dto.getOccupied().equals("false")) { // 좌석이 비어있을 시
+//                    getReviewData(dto.getId());
                     // 임의의 데이터입니다.
                     List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
                     List<String> listContent = Arrays.asList(
@@ -982,12 +1002,92 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(getContext(), "서버 통신 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getUserData() {
+        LoginData loginData = new LoginData(LoginActivity.LOGIN_DATA);
+        Log.d("유저정보 Id : ", LoginActivity.LOGIN_DATA);
+        //Retrofit 호출
+        Call<String> call = Retrofit_client.getApiService().getEmpInfo(loginData);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d("유저정보 ID : ", LoginActivity.LOGIN_DATA);
+                if(!response.isSuccessful()){
+                    Log.e("유저정보 확인 - 연결이 비정상적 : ", "error code : " + response.code());
+                    Log.d("response : ", response.toString());
+                    return;
+                }
+                String checkAlready = response.body();
+                Log.d("유저정보 확인 - 연결이 성공적 : ", response.body().toString());
+
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+    }
+
+    private void getReviewData(String seatId) {
+        //Retrofit 호출
+        Call<String> call = Retrofit_client.getApiService().getReview(seatId);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(!response.isSuccessful()){
+                    Log.e("유저정보 확인 - 연결이 비정상적 : ", "error code : " + response.code());
+                    Log.d("response : ", response.toString());
+                    return;
+                }
+                String result = response.body();
+                Log.d("연결이 성공적 : ", response.body().toString());
+
+                try {
+                    // 받아온 source를 JSONObject로 변환한다.
+                    JSONObject jsonObj = new JSONObject(result);
+                    JSONArray jArray = (JSONArray) jsonObj.get("response");
+                    items = new ArrayList<>();
+
+                    Log.d("Json Length", "" + jArray.length());
+
+                    for (int i=0; i < jArray.length(); i++) {
+                        // 0번째 JSONObject를 받아옴
+                        JSONObject row = jArray.getJSONObject(i);
+                        ReviewData reviewData = new ReviewData();
+//                        reviewData.setMessageId(row.getInt("id"));
+//                        reviewData.setFlowerId(row.getInt("flowerId"));
+//                        reviewData.setImgUrl(row.getString("imgUrl"));
+//                        reviewData.setContent(row.getString("content"));
+//                        reviewData.setWriter(row.getString("writer"));
+//                        reviewData.setFont(row.getInt("font"));
+//                        reviewItems.add(reviewData);
+
+//                        Log.d("id : ", i + "번째 : " + row.getString("id"));
+//                        Log.d("flowerId : ", i + "번째 : " + row.getString("flowerId"));
+//                        Log.d("imgUrl : ", i + "번째 : " + row.getString("imgUrl"));
+//                        Log.d("content : ", i + "번째 : " + row.getString("content"));
+//                        Log.d("writer : ", i + "번째 : " + row.getString("writer"));
+//                        Log.d("font : ", i + "번째 : " + row.getString("font"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
             }
         });
     }

@@ -8,9 +8,9 @@
     android:padding="6dp" >
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/seat_animation"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/anim_hour_glass"/>
+        app:lottie_rawRes="@raw/anim_loading"/>
 </LinearLayout>

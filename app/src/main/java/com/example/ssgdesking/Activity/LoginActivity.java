@@ -9,11 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.Data.ReservationLoginData;
+import com.example.ssgdesking.Data.RetrofitSeatData;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.Retrofit.Retrofit_client;
 import com.example.ssgdesking.View.ProgressDialog;
 import com.example.ssgdesking.databinding.ActivityLoginBinding;
+
+import org.json.JSONObject;
 
 import okhttp3.CookieJar;
 import retrofit2.Call;
@@ -23,6 +27,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     ProgressDialog progressDialog;
+    public static String LOGIN_DATA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,28 +64,43 @@ public class LoginActivity extends AppCompatActivity {
 
         //Retrofit 호출
         ReservationLoginData reservationLoginData = new ReservationLoginData(empno, password);
-        Call<ReservationLoginData> call = Retrofit_client.getApiService().loginPost(reservationLoginData);
-        call.enqueue(new Callback<ReservationLoginData>() {
+        Call<String> call = Retrofit_client.getApiService().loginPost(reservationLoginData);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<ReservationLoginData> call, Response<ReservationLoginData> response) {
-                progressDialog.dismiss();
-                if(!response.isSuccessful()){
-                    Log.e("연결이 비정상적 : ", "error code : " + response.code());
-                    Toast.makeText(getApplicationContext(), "해당 계정 정보가 없습니다.",Toast.LENGTH_SHORT).show();
-                    return;
+            public void onResponse(Call<String> call, Response<String> response) {
+                try {
+                    progressDialog.dismiss();
+                    if(!response.isSuccessful()){
+                        Log.e("연결이 비정상적 : ", "error code : " + response.code());
+                        Toast.makeText(getApplicationContext(), "해당 계정 정보가 없습니다.",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    String result = response.body().toString(); // 로그인 응답값
+                    Log.e("연결이 성공적 : ", result);
+
+                    // 받아온 source를 JSONObject로 변환한다.
+                    JSONObject jsonObj = new JSONObject(result);
+
+                    JSONObject row = (JSONObject) jsonObj.get("response");
+                    LOGIN_DATA = row.getString("id");
+
+                    Log.d("id : ", row.getString("id"));
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_SHORT).show();
+                    finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                ReservationLoginData checkAlready = response.body();
-                Log.d("연결이 성공적 : ", response.body().toString());
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                Toast.makeText(getApplicationContext(), "로그인 성공",Toast.LENGTH_SHORT).show();
-                finish();
+
             }
             @Override
-            public void onFailure(Call<ReservationLoginData> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 progressDialog.dismiss();
                 Log.e("연결실패", t.getMessage());
-                Toast.makeText(getApplicationContext(), "연결실패",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "서버 연결상태를 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
     }
