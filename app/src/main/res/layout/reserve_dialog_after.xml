@@ -105,12 +105,14 @@
             android:layout_marginTop="20dp"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/seat_deptname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="어디어디부서"
                 android:layout_marginLeft="20dp">
             </TextView>
             <TextView
+                android:id="@+id/seat_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="홍길동 사원"

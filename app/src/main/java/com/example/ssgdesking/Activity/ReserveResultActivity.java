@@ -13,7 +13,7 @@ import com.example.ssgdesking.R;
 
 public class ReserveResultActivity extends AppCompatActivity {
     ReserveConfirmFragment reserveConfirmFragment;
-    public static String reserveInfo;
+    public static String reserveInfo, reserveSeatID;
 
     private static class SingletonHolder {
         public static final ReserveResultActivity INSTANCE = new ReserveResultActivity();
@@ -29,6 +29,7 @@ public class ReserveResultActivity extends AppCompatActivity {
         initFragment();
         Intent intent = getIntent();
         reserveInfo = intent.getStringExtra("info");
+        reserveSeatID = intent.getStringExtra("seatID");
     }
 
     private void initFragment() {

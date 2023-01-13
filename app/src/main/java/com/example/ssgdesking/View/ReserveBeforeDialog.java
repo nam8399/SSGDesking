@@ -33,7 +33,7 @@ import java.util.Objects;
 
 public class ReserveBeforeDialog extends Dialog {
     protected Context mContext;
-    private String title;
+    private String title, seatID;
     private ArrayList<ReserveCommentData> data;
     ReserveCommentAdapter adapter;
 
@@ -78,6 +78,7 @@ public class ReserveBeforeDialog extends Dialog {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), ReserveResultActivity.class);
                 intent.putExtra("info", title);
+                intent.putExtra("seatID", seatID);
                 getContext().startActivity(intent);
                 dismiss();
             }
@@ -115,11 +116,12 @@ public class ReserveBeforeDialog extends Dialog {
         adapter.notifyDataSetChanged();
     }
 
-    public ReserveBeforeDialog(Context context, String title, ArrayList<ReserveCommentData> data) {
+    public ReserveBeforeDialog(Context context, String title, ArrayList<ReserveCommentData> data, String seatID) {
         super( context );
         mContext = context;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.title = title;
         this.data = data;
+        this.seatID = seatID;
     }
 }

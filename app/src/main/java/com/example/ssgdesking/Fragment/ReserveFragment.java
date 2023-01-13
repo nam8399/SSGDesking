@@ -1,10 +1,6 @@
 package com.example.ssgdesking.Fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -13,25 +9,28 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.ssgdesking.Adapter.CustomSpinnerAdapter;
 import com.example.ssgdesking.Data.ReservationDTO;
 import com.example.ssgdesking.Data.ReserveCommentData;
+import com.example.ssgdesking.Data.RetrofitSeatData;
 import com.example.ssgdesking.Interface.onBackPressedListener;
 import com.example.ssgdesking.R;
+import com.example.ssgdesking.Retrofit.Retrofit_client;
 import com.example.ssgdesking.View.ProgressDialog;
 import com.example.ssgdesking.View.ReserveAfterDialog;
 import com.example.ssgdesking.View.ReserveBeforeDialog;
 import com.example.ssgdesking.databinding.FragmentReserveBinding;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -42,6 +41,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ReserveFragment extends Fragment implements onBackPressedListener, View.OnClickListener, Runnable {
     private FragmentReserveBinding binding;
     MainFragment mainFragment;
@@ -51,8 +54,15 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     private Handler handler;
     private String section = "";
     private String location = "";
+    private RetrofitSeatData retrofitSeatData;
     ArrayList<ReservationDTO> items;
     ArrayList<ReservationDTO> viewItems;
+    Call<RetrofitSeatData> call;
+    private final String TAG = this.getClass().getSimpleName();
+
+    private List<String> list = new ArrayList<>();
+    private Spinner spinner;
+    private CustomSpinnerAdapter adapter;
 
 
     public ReserveFragment() {
@@ -84,6 +94,8 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     }
 
     private void initView() {
+        initSpinner();
+
         Handler progressHandler = new Handler(Looper.getMainLooper());
         progressDialog = new ProgressDialog(getContext());
         progressDialog.show();
@@ -194,6 +206,41 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         });
 
         viewThread.start();
+    }
+
+    private void initSpinner() {
+        spinner = binding.spinner;
+
+        // 스피너 안에 넣을 데이터 임의 생성
+        list.add("19F");
+        list.add("21F");
+
+        // 스피너에 붙일 어댑터 초기화
+        adapter = new CustomSpinnerAdapter(getContext(), list);
+        spinner.setAdapter(adapter);
+
+        // 스피너 클릭 리스너
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String otherItem = (String) spinner.getItemAtPosition(position);
+                Toast.makeText(getContext(), "선택한 아이템 : " + otherItem, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "getItemAtPosition() - 선택한 아이템 : " + otherItem);
+                switch (otherItem) {
+                    case "21F":{
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.fragmentFrame, mainFragment).commit();
+                        break;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                //
+            }
+        });
     }
 
     private void controller() {
@@ -851,7 +898,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         }
     }
 
-    private void connectSetting() {
+    private void connectSetting() { // 좌석 클릭 시 처리
         if (HTTP_OK) {
             progressDialog.dismiss();
 
@@ -865,17 +912,9 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                     Log.d("좌석 예약여부 확인 : ", dto.getOccupied());
                 }
 
-                if (isReserve && dto.getOccupied().equals("true")) {
-                    ReserveAfterDialog dialog = new ReserveAfterDialog(getContext(), reserve_title);
-                    dialog.show();
-                    isReserve = false;
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            setReserveColorGray(dto.getSection(), dto.getLocation());
-                        }
-                    });
-                } else if(isReserve && dto.getOccupied().equals("false")) {
+                if (isReserve && dto.getOccupied().equals("true")) { // 좌석에 앉는 사람이 있울 시
+                    getReserveData(dto.getId(), reserve_title, dto);
+                } else if(isReserve && dto.getOccupied().equals("false")) { // 좌석이 비어있을 시
                     // 임의의 데이터입니다.
                     List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
                     List<String> listContent = Arrays.asList(
@@ -885,7 +924,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                             "이 자리에 앉고 인생이 폈습니다."
                     );
 
-                    ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), reserve_title, addCommentData(listTitle, listContent));
+                    ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), reserve_title, addCommentData(listTitle, listContent), dto.getId());
                     dialog.show();
 
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -902,6 +941,55 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             progressDialog.dismiss();
             Toast.makeText(getContext(), "인터넷 연결상태를 확인해주세요.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getReserveData(String id, String reserve_title, ReservationDTO dto) {
+        Call<String> call_str = Retrofit_client.getApiService().getPostsString(id);
+        call_str.enqueue(new Callback<String>() {
+            //콜백 받는 부분
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                try {
+                    String result = response.body().toString(); // 로그인 응답값
+                    Log.d("Response Result : ", result);
+
+                    // 받아온 source를 JSONObject로 변환한다.
+                    JSONObject jsonObj = new JSONObject(result);
+
+                    JSONObject row = (JSONObject) jsonObj.get("response");
+                    retrofitSeatData = new RetrofitSeatData();
+                    retrofitSeatData.setDeptid(row.getString("deptid"));
+                    retrofitSeatData.setDeptName(row.getString("deptName"));
+                    retrofitSeatData.setEmpno(row.getString("empno"));
+                    retrofitSeatData.setName(row.getString("name"));
+
+                    Log.d("deptid : ", row.getString("deptid"));
+                    Log.d("deptName : ", row.getString("deptName"));
+                    Log.d("empno : ", row.getString("empno"));
+                    Log.d("name : ", row.getString("name"));
+
+                    ReserveAfterDialog dialog = new ReserveAfterDialog(getContext(), reserve_title, retrofitSeatData.getDeptName(), retrofitSeatData.getName());
+                    dialog.show();
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            setReserveColorGray(dto.getSection(), dto.getLocation());
+                        }
+                    });
+
+                } catch (NullPointerException e) {
+                    Toast.makeText(getContext(), "서버 응답값이 없습니다.", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getContext(), "서버 통신 실패", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setReserveColorRed(String section, String location) {

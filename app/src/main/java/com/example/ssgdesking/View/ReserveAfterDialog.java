@@ -15,11 +15,13 @@ import android.widget.TextView;
 
 import com.example.ssgdesking.R;
 
+import org.w3c.dom.Text;
+
 import java.util.Objects;
 
 public class ReserveAfterDialog extends Dialog {
     protected Context mContext;
-    private String title;
+    private String title, dept, name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,14 @@ public class ReserveAfterDialog extends Dialog {
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
         TextView seatnum = findViewById(R.id.seat_number);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        TextView deptName_txt = findViewById(R.id.seat_deptname);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        TextView name_txt = findViewById(R.id.seat_name);
+
         seatnum.setText(title);
+        deptName_txt.setText(dept);
+        name_txt.setText(name);
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         ImageView cancelBtn = findViewById(R.id.btn_dialog_cancel);
@@ -63,10 +72,12 @@ public class ReserveAfterDialog extends Dialog {
         }
     }
 
-    public ReserveAfterDialog(Context context, String title) {
+    public ReserveAfterDialog(Context context, String title, String dept, String name) {
         super( context );
         mContext = context;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.title = title;
+        this.dept = dept;
+        this.name = name;
     }
 }

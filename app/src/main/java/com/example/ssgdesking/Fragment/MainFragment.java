@@ -28,7 +28,6 @@ public class MainFragment extends Fragment {
 
     MainActivity mainActivity;
     ReserveFragment reserveFragment;
-    ProgressDialog progressDialog;
 
     public MainFragment() {
         // Required empty public constructor
@@ -54,11 +53,6 @@ public class MainFragment extends Fragment {
     private void initView() {
         mainActivity = MainActivity.getInstance();
         reserveFragment = new ReserveFragment();
-
-        //로딩창 객체 생성
-        progressDialog = new ProgressDialog(getContext());
-        //로딩창을 투명하게
-        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     private void controller() {
