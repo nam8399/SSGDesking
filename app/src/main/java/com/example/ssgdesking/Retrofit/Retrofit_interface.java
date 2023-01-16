@@ -1,6 +1,7 @@
 package com.example.ssgdesking.Retrofit;
 
 import com.example.ssgdesking.Data.LoginData;
+import com.example.ssgdesking.Data.ReservationEreportData;
 import com.example.ssgdesking.Data.ReservationLoginData;
 import com.example.ssgdesking.Data.ReviewData;
 
@@ -33,4 +34,7 @@ public interface Retrofit_interface {
 
     @POST("reservation/checkout/{seatID}")
     Call<String> reserveLeavePost(@Path("seatID") String empno, @Body LoginData loginData);
+
+    @POST("ereport")
+    Call<String> reserveEreportPost(@Body ReservationEreportData reservationEreportData);
 }

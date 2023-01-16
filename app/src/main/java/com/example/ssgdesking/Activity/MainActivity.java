@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ssgdesking.Fragment.MainFragment;
+import com.example.ssgdesking.Fragment.ReserveEReportFragment;
 import com.example.ssgdesking.Fragment.ReserveFragment;
 import com.example.ssgdesking.Fragment.ReserveInfoFragment;
 import com.example.ssgdesking.Interface.onBackPressedListener;
@@ -94,6 +95,17 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.item_report_etc:{ // 불편사항 신고
+                        ReserveEReportFragment reserveEReportFragment = ReserveEReportFragment.getInstance();
+                        fragmentManager = getSupportFragmentManager();
+
+                        //프래그먼트 Transaction 획득
+                        //프래그먼트를 올리거나 교체하는 작업을 Transaction이라고 합니다.
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        //프래그먼트를 FrameLayout의 자식으로 등록해줍니다.
+                        fragmentTransaction.replace(R.id.fragmentFrame, reserveEReportFragment);
+                        //commit을 하면 자식으로 등록된 프래그먼트가 화면에 보여집니다.
+                        fragmentTransaction.commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     }
                     case R.id.item_message_developer:{ // 개발자에게 연락하기
