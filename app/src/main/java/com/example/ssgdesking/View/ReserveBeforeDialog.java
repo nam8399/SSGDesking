@@ -24,6 +24,7 @@ import com.example.ssgdesking.Activity.MainActivity;
 import com.example.ssgdesking.Activity.ReserveResultActivity;
 import com.example.ssgdesking.Adapter.ReserveCommentAdapter;
 import com.example.ssgdesking.Data.ReserveCommentData;
+import com.example.ssgdesking.Fragment.ReserveFragment;
 import com.example.ssgdesking.R;
 
 import java.util.ArrayList;
@@ -76,11 +77,17 @@ public class ReserveBeforeDialog extends Dialog {
         reserveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ReserveResultActivity.class);
-                intent.putExtra("info", title);
-                intent.putExtra("seatID", seatID);
-                getContext().startActivity(intent);
-                dismiss();
+                if (ReserveFragment.isReserve) {
+                    Toast.makeText(getContext(), "이미 지정된 좌석이 있습니다.", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                } else {
+                    Intent intent = new Intent(getContext(), ReserveResultActivity.class);
+                    intent.putExtra("info", title);
+                    intent.putExtra("seatID", seatID);
+                    getContext().startActivity(intent);
+                    dismiss();
+                }
+
             }
         });
 

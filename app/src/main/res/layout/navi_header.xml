@@ -12,23 +12,18 @@
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
         android:layout_gravity="center"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@drawable/icon_app" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text ="홍길동"
+        android:text ="I&amp;C Desk"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/tv_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="20, 남자"
-        android:textSize="14sp"/>
 
 </LinearLayout>

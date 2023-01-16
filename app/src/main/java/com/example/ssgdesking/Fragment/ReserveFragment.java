@@ -1,17 +1,23 @@
 package com.example.ssgdesking.Fragment;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,6 +29,7 @@ import com.example.ssgdesking.Adapter.CustomSpinnerAdapter;
 import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.Data.ReservationDTO;
 import com.example.ssgdesking.Data.ReserveCommentData;
+import com.example.ssgdesking.Data.ReserveInfoData;
 import com.example.ssgdesking.Data.RetrofitSeatData;
 import com.example.ssgdesking.Data.ReviewData;
 import com.example.ssgdesking.Interface.onBackPressedListener;
@@ -32,6 +39,7 @@ import com.example.ssgdesking.View.ProgressDialog;
 import com.example.ssgdesking.View.ReserveAfterDialog;
 import com.example.ssgdesking.View.ReserveBeforeDialog;
 import com.example.ssgdesking.databinding.FragmentReserveBinding;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +50,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -60,16 +67,24 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     private String section = "";
     private String location = "";
     private RetrofitSeatData retrofitSeatData;
+    private ReserveInfoData reserveInfoData;
     private LoginData mLoginData;
+    public static boolean isReserve = false;
+    public static String MY_SEAT_ID;
+    public static String reserve_title;
     ArrayList<ReservationDTO> items;
     ArrayList<ReservationDTO> viewItems;
     ArrayList<ReviewData> reviewItems;
     Call<RetrofitSeatData> call;
     private final String TAG = this.getClass().getSimpleName();
 
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+
     private List<String> list = new ArrayList<>();
     private Spinner spinner;
     private CustomSpinnerAdapter adapter;
+
 
 
     public ReserveFragment() {
@@ -93,13 +108,19 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentReserveBinding.inflate(inflater);
-        getUserData();
 
-        initView();
 
         controller();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        initView();
+
     }
 
     private void initView() {
@@ -118,7 +139,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
                 try {
                     StringBuffer sb = new StringBuffer();
-                    URL url = new URL("http://192.168.189.32:80/api/v1/reservation/19");
+                    URL url = new URL("http://43.201.16.249:8080/api/v1/reservation/19");
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -181,14 +202,17 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                             public void run() {
                                 try {
                                     if (VIEW_HTTP_OK) {
-
+                                        isReserve = false;
                                         for (ReservationDTO dto : viewItems) {
-                                            if (dto.getOccupied().equals("true")) {
+                                            if (dto.getFixed().equals("true")) {
+                                                setReserveColorPurple(dto.getSection(), dto.getLocation());
+                                            } else if (dto.getOccupied().equals("true")) {
                                                 setReserveColorGray(dto.getSection(), dto.getLocation());
                                             } else {
                                                 setReserveColorRed(dto.getSection(), dto.getLocation());
                                             }
                                         }
+                                        getUserData();
                                         progressHandler.post(new Runnable() {
                                             @Override
                                             public void run() {
@@ -258,7 +282,11 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         });
     }
 
+
+
     private void controller() {
+        pref = getActivity().getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        editor = pref.edit();
         mainFragment = new MainFragment();
 
         binding.btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -842,7 +870,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
         try {
             StringBuffer sb = new StringBuffer();
-            URL url = new URL("http://192.168.189.32:80/api/v1/reservation/19");
+            URL url = new URL("http://43.201.16.249:8080/api/v1/reservation/19");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -919,12 +947,15 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
     private void connectSetting() { // 좌석 클릭 시 처리
         if (HTTP_OK) {
-            progressDialog.dismiss();
 
             for (ReservationDTO dto : items) {
 
                 boolean isReserve = false;
-                String reserve_title = dto.getFloor() + "층 " + section + "-" + location;
+                reserve_title = dto.getFloor() + "층 " + section + "-" + location;
+                pref = getActivity().getSharedPreferences("pref", Activity.MODE_PRIVATE);
+                editor = pref.edit();
+                editor.putString("RESERVE_SEAT_TITLE", reserve_title);
+                editor.apply();
                 Log.d("클릭 예약 좌석 정보 : ", reserve_title);
                 if (dto.getSection().equals(section) && dto.getLocation().equals(location)) {
                     isReserve = true;
@@ -934,25 +965,8 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 if (isReserve && dto.getOccupied().equals("true")) { // 좌석에 앉는 사람이 있울 시
                     getReserveData(dto.getId(), reserve_title, dto);
                 } else if(isReserve && dto.getOccupied().equals("false")) { // 좌석이 비어있을 시
-//                    getReviewData(dto.getId());
+                    getReviewData(dto.getId(), reserve_title, dto);
                     // 임의의 데이터입니다.
-                    List<String> listTitle = Arrays.asList("No. 0001", "No. 0002", "No. 0003", "No. 0004");
-                    List<String> listContent = Arrays.asList(
-                            "이 자리 좋아요.",
-                            "잠잘수 있는 최고의 자리.",
-                            "시몬스 침대.",
-                            "이 자리에 앉고 인생이 폈습니다."
-                    );
-
-                    ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), reserve_title, addCommentData(listTitle, listContent), dto.getId());
-                    dialog.show();
-
-                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            setReserveColorRed(dto.getSection(), dto.getLocation());
-                        }
-                    });
                 }
             }
 
@@ -988,12 +1002,19 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                     Log.d("empno : ", row.getString("empno"));
                     Log.d("name : ", row.getString("name"));
 
+                    progressDialog.dismiss();
                     ReserveAfterDialog dialog = new ReserveAfterDialog(getContext(), reserve_title, retrofitSeatData.getDeptName(), retrofitSeatData.getName());
                     dialog.show();
                     dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialogInterface) {
-                            setReserveColorGray(dto.getSection(), dto.getLocation());
+                            if (dto.getSection().equals(reserveInfoData.getSection()) &&
+                                    dto.getLocation().equals(reserveInfoData.getLocation()) &&
+                                    reserveInfoData.getOccupied().equals("true")) {
+                                setReserveColorBlue(dto.getSection(), dto.getLocation());
+                            } else {
+                                setReserveColorGray(dto.getSection(), dto.getLocation());
+                            }
                         }
                     });
 
@@ -1018,18 +1039,58 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         LoginData loginData = new LoginData(LoginActivity.LOGIN_DATA);
         Log.d("유저정보 Id : ", LoginActivity.LOGIN_DATA);
         //Retrofit 호출
-        Call<String> call = Retrofit_client.getApiService().getEmpInfo(loginData);
+        Call<String> call = Retrofit_client.getApiService().getEmpSeat(loginData);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Log.d("유저정보 ID : ", LoginActivity.LOGIN_DATA);
-                if(!response.isSuccessful()){
-                    Log.e("유저정보 확인 - 연결이 비정상적 : ", "error code : " + response.code());
-                    Log.d("response : ", response.toString());
-                    return;
+                try {
+                    Log.d("유저정보 ID : ", LoginActivity.LOGIN_DATA);
+                    if(!response.isSuccessful()){
+                        Log.e("유저정보 확인 - 연결이 비정상적 : ", "error code : " + response.code());
+                        Log.d("response : ", response.toString());
+                        return;
+                    }
+                    String result = response.body();
+                    Log.d("유저정보 확인 - 연결이 성공적 : ", response.body().toString());
+
+                    // 받아온 source를 JSONObject로 변환한다.
+                    JSONObject jsonObj = new JSONObject(result);
+
+                    JSONObject row = (JSONObject) jsonObj.get("response");
+                    reserveInfoData = new ReserveInfoData();
+                    reserveInfoData.setId(row.getString("id"));
+                    reserveInfoData.setFloor(row.getString("floor"));
+                    reserveInfoData.setSection(row.getString("section"));
+                    reserveInfoData.setLocation(row.getString("location"));
+                    reserveInfoData.setOccupied(row.getString("occupied"));
+
+                    Log.d("id : ", row.getString("id"));
+                    Log.d("floor : ", row.getString("floor"));
+                    Log.d("section : ", row.getString("section"));
+                    Log.d("location : ", row.getString("location"));
+                    Log.d("occupied : ", row.getString("occupied"));
+
+                    for (ReservationDTO dto : viewItems) {
+                        if (dto.getSection().equals(reserveInfoData.getSection()) &&
+                                dto.getLocation().equals(reserveInfoData.getLocation()) &&
+                                reserveInfoData.getOccupied().equals("true")) {
+                            setReserveColorBlue(dto.getSection(), dto.getLocation());
+                            isReserve = true; // 내 예약 여부 확인
+                            MY_SEAT_ID = dto.getId();
+                        }
+                    }
+
+                    if (!isReserve) {
+                        editor.putString("RESERVE_SEAT_INFO", "");
+                        editor.putString("RESERVE_ENTER_TIME", "");
+                        editor.putString("RESERVE_LEAVE_TIME", "");
+                        editor.apply();
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                String checkAlready = response.body();
-                Log.d("유저정보 확인 - 연결이 성공적 : ", response.body().toString());
 
             }
             @Override
@@ -1039,19 +1100,20 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         });
     }
 
-    private void getReviewData(String seatId) {
+    private void getReviewData(String seatId, String reserve_title, ReservationDTO dto) {
         //Retrofit 호출
         Call<String> call = Retrofit_client.getApiService().getReview(seatId);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+                reviewItems = new ArrayList<>();
                 if(!response.isSuccessful()){
-                    Log.e("유저정보 확인 - 연결이 비정상적 : ", "error code : " + response.code());
+                    Log.e("리뷰 확인 - 연결이 비정상적 : ", "error code : " + response.code());
                     Log.d("response : ", response.toString());
                     return;
                 }
                 String result = response.body();
-                Log.d("연결이 성공적 : ", response.body().toString());
+                Log.d("리뷰 확인 - 연결이 성공적 : ", response.body().toString());
 
                 try {
                     // 받아온 source를 JSONObject로 변환한다.
@@ -1060,26 +1122,51 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                     items = new ArrayList<>();
 
                     Log.d("Json Length", "" + jArray.length());
+                    reviewItems.clear();
 
+                    ArrayList<String> listTitle = new ArrayList<>();
+                    ArrayList<String> listContent = new ArrayList<>();
+
+                    if (jArray.length() == 0) {
+                        listTitle.add("알림");
+                        listContent.add("작성된 리뷰가 없습니다.");
+                    }
+
+                    int index = 0;
                     for (int i=0; i < jArray.length(); i++) {
                         // 0번째 JSONObject를 받아옴
                         JSONObject row = jArray.getJSONObject(i);
                         ReviewData reviewData = new ReviewData();
-//                        reviewData.setMessageId(row.getInt("id"));
-//                        reviewData.setFlowerId(row.getInt("flowerId"));
-//                        reviewData.setImgUrl(row.getString("imgUrl"));
-//                        reviewData.setContent(row.getString("content"));
-//                        reviewData.setWriter(row.getString("writer"));
-//                        reviewData.setFont(row.getInt("font"));
-//                        reviewItems.add(reviewData);
+                        reviewData.setId(row.getString("id"));
+                        reviewData.setEmpid(row.getString("empid"));
+                        reviewData.setSeatid(row.getString("seatid"));
+                        reviewData.setContext(row.getString("context"));
+                        reviewItems.add(reviewData);
 
-//                        Log.d("id : ", i + "번째 : " + row.getString("id"));
-//                        Log.d("flowerId : ", i + "번째 : " + row.getString("flowerId"));
-//                        Log.d("imgUrl : ", i + "번째 : " + row.getString("imgUrl"));
-//                        Log.d("content : ", i + "번째 : " + row.getString("content"));
-//                        Log.d("writer : ", i + "번째 : " + row.getString("writer"));
-//                        Log.d("font : ", i + "번째 : " + row.getString("font"));
+                        Log.d("id : ", i + "번째 : " + row.getString("id"));
+                        Log.d("empid : ", i + "번째 : " + row.getString("empid"));
+                        Log.d("seatid : ", i + "번째 : " + row.getString("seatid"));
+                        Log.d("context : ", i + "번째 : " + row.getString("context"));
+
                     }
+                    if (!reviewItems.isEmpty() || reviewItems != null) {
+                        for (ReviewData mReviewData : reviewItems) {
+                            index ++;
+                            listTitle.add("No. " + index);
+                            listContent.add(mReviewData.getContext());
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                    ReserveBeforeDialog dialog = new ReserveBeforeDialog(getContext(), reserve_title, addCommentData(listTitle, listContent), dto.getId());
+                    dialog.show();
+
+                    dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            setReserveColorRed(dto.getSection(), dto.getLocation());
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -1087,7 +1174,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
+                Log.e("리뷰확인 - 연결실패", t.getMessage());
             }
         });
     }
@@ -1258,165 +1345,331 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         }
     }
 
-    private void setReserveColorGreen(String section, String location) {
+    private void setReserveColorBlue(String section, String location) {
         switch (section) {
             case "challenge":
             {
                 if (location.equals("1")) {
-                    binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("2")) {
-                    binding.floor1912.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1912.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("3")) {
-                    binding.floor1913.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1913.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("4")) {
-                    binding.floor1914.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1914.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("5")) {
-                    binding.floor1915.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1915.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("6")) {
-                    binding.floor1916.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1916.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("7")) {
-                    binding.floor1917.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1917.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("8")) {
-                    binding.floor1918.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1918.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("9")) {
-                    binding.floor1919.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1919.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("10")) {
-                    binding.floor19110.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19110.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("11")) {
-                    binding.floor19111.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19111.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("12")) {
-                    binding.floor19112.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19112.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 }
             }
             case "collaboration":
             {
                 if (location.equals("1")) {
-                    binding.floor1921.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1921.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("2")) {
-                    binding.floor1922.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1922.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("3")) {
-                    binding.floor1923.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1923.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("4")) {
-                    binding.floor1924.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1924.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("5")) {
-                    binding.floor1925.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1925.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("6")) {
-                    binding.floor1926.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1926.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("7")) {
-                    binding.floor1927.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1927.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("8")) {
-                    binding.floor1928.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1928.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("9")) {
-                    binding.floor1929.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1929.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("10")) {
-                    binding.floor19210.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19210.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("11")) {
-                    binding.floor19211.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19211.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("12")) {
-                    binding.floor19212.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19212.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 }
             }
             case "fun":
             {
                 if (location.equals("1")) {
-                    binding.floor1931.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1931.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("2")) {
-                    binding.floor1932.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1932.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("3")) {
-                    binding.floor1933.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1933.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("4")) {
-                    binding.floor1934.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1934.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("5")) {
-                    binding.floor1935.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1935.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("6")) {
-                    binding.floor1936.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1936.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("7")) {
-                    binding.floor1937.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1937.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("8")) {
-                    binding.floor1938.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1938.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("9")) {
-                    binding.floor1939.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1939.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("10")) {
-                    binding.floor19310.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19310.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("11")) {
-                    binding.floor19311.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19311.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("12")) {
-                    binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 }
             }
             case "innovation":
             {
                 if (location.equals("1")) {
-                    binding.floor1941.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1941.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("2")) {
-                    binding.floor1942.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1942.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("3")) {
-                    binding.floor1943.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1943.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("4")) {
-                    binding.floor1944.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1944.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("5")) {
-                    binding.floor1945.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1945.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("6")) {
-                    binding.floor1946.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1946.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("7")) {
-                    binding.floor1947.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1947.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("8")) {
-                    binding.floor1948.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1948.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("9")) {
-                    binding.floor1949.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor1949.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("10")) {
-                    binding.floor19410.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19410.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("11")) {
-                    binding.floor19411.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19411.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
                 } else if (location.equals("12")) {
-                    binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_green);
+                    binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
+                }
+            }
+
+        }
+    }
+
+    private void setReserveColorPurple(String section, String location) {
+        switch (section) {
+            case "challenge":
+            {
+                if (location.equals("1")) {
+                    binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1912.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1913.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1914.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1915.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1916.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1917.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1918.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1919.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19110.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19111.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19112.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                }
+            }
+            case "collaboration":
+            {
+                if (location.equals("1")) {
+                    binding.floor1921.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1922.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1923.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1924.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1925.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1926.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1927.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1928.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1929.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19210.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19211.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19212.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                }
+            }
+            case "fun":
+            {
+                if (location.equals("1")) {
+                    binding.floor1931.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1932.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1933.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1934.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1935.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1936.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1937.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1938.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1939.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19310.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19311.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                }
+            }
+            case "innovation":
+            {
+                if (location.equals("1")) {
+                    binding.floor1941.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1942.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1943.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1944.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1945.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1946.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1947.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1948.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1949.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19410.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19411.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_purple);
                     break;
                 }
             }

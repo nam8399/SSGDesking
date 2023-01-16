@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     ProgressDialog progressDialog;
     public static String LOGIN_DATA;
+    public static String USER_NAME;
+    public static String USER_EMPNO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,21 +73,25 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     progressDialog.dismiss();
                     if(!response.isSuccessful()){
-                        Log.e("연결이 비정상적 : ", "error code : " + response.code());
+                        Log.e("로그인 정보 - 연결이 비정상적 : ", "error code : " + response.code());
                         Toast.makeText(getApplicationContext(), "해당 계정 정보가 없습니다.",Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     String result = response.body().toString(); // 로그인 응답값
-                    Log.e("연결이 성공적 : ", result);
+                    Log.e("로그인 정보 - 연결이 성공적 : ", result);
 
                     // 받아온 source를 JSONObject로 변환한다.
                     JSONObject jsonObj = new JSONObject(result);
 
                     JSONObject row = (JSONObject) jsonObj.get("response");
                     LOGIN_DATA = row.getString("id");
+                    USER_NAME = row.getString("name");
+                    USER_EMPNO = row.getString("empno");
 
                     Log.d("id : ", row.getString("id"));
+                    Log.d("name : ", row.getString("name"));
+                    Log.d("empno : ", row.getString("empno"));
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

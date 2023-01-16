@@ -1,6 +1,8 @@
 package com.example.ssgdesking.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -39,6 +41,9 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
     private FragmentReserveConfirmBinding binding;
     ReserveSuccessFragment reserveSuccessFragment;
     ReserveResultActivity reserveResultActivity;
+    public static String RESERVE_SEAT_INFO, RESERVE_ENTER_TIME, RESERVE_LEAVE_TIME;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
     private ProgressDialog progressDialog;
     private Calendar cal;
     long mNow;
@@ -67,6 +72,9 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
     }
 
     private void initSetting() {
+        pref = getActivity().getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        editor = pref.edit();
+
         reserveSuccessFragment = new ReserveSuccessFragment();
 
         mNow = System.currentTimeMillis();
@@ -75,13 +83,19 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
         cal = Calendar.getInstance();
         cal.setTime(mDate);
 
-        cal.add(Calendar.HOUR, 9);
+        cal.add(Calendar.HOUR, 10);
 
         reserveResultActivity = ReserveResultActivity.getInstance();
         binding.reserveConfirmInfo.setText(reserveResultActivity.reserveInfo + "번");
         binding.reserveConfirmStarttime.setText(getTime());
         binding.reserveConfirmEndtime.setText(mFormat.format(cal.getTime()));
-
+        RESERVE_SEAT_INFO = reserveResultActivity.reserveInfo + "번";
+        RESERVE_ENTER_TIME = getTime();
+        RESERVE_LEAVE_TIME = mFormat.format(cal.getTime());
+        editor.putString("RESERVE_SEAT_INFO", RESERVE_SEAT_INFO);
+        editor.putString("RESERVE_ENTER_TIME", RESERVE_ENTER_TIME);
+        editor.putString("RESERVE_LEAVE_TIME", RESERVE_LEAVE_TIME);
+        editor.apply();
 
         //로딩창 객체 생성
         progressDialog = new ProgressDialog(getContext());
@@ -147,6 +161,7 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
             }
         });
     }
+
 
     private String getTime(){
         return mFormat.format(mDate);

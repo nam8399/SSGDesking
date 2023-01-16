@@ -20,10 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ssgdesking.Fragment.MainFragment;
+import com.example.ssgdesking.Fragment.ReserveFragment;
+import com.example.ssgdesking.Fragment.ReserveInfoFragment;
 import com.example.ssgdesking.Interface.onBackPressedListener;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     MainFragment fragmentMain;
     private long lastTimeBackPressed;
     private ActivityMainBinding binding;
+    private FragmentManager fragmentManager;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -43,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater()); //파라미터로 LayoutInflater객체 전달
 
         setContentView(binding.getRoot());
+
         initSideMenu();
 
         initFragment();
     }
-
     private void initSideMenu() {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,6 +62,51 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
+
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.item_reserve_seat:{ // 좌석 예약
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    }
+                    case R.id.item_reserve_classroom:{ // 회의실 예약
+                        break;
+                    }
+                    case R.id.item_seatinfo:{ // 좌석배정현황
+                        ReserveInfoFragment reserveInfoFragment = ReserveInfoFragment.getInstance();
+                        fragmentManager = getSupportFragmentManager();
+
+                        //프래그먼트 Transaction 획득
+                        //프래그먼트를 올리거나 교체하는 작업을 Transaction이라고 합니다.
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        //프래그먼트를 FrameLayout의 자식으로 등록해줍니다.
+                        fragmentTransaction.replace(R.id.fragmentFrame, reserveInfoFragment);
+                        //commit을 하면 자식으로 등록된 프래그먼트가 화면에 보여집니다.
+                        fragmentTransaction.commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    }
+                    case R.id.item_report_seat:{ // 좌석 신고
+                        break;
+                    }
+                    case R.id.item_report_etc:{ // 불편사항 신고
+                        break;
+                    }
+                    case R.id.item_message_developer:{ // 개발자에게 연락하기
+                        break;
+                    }
+                    case R.id.item_logout:{ // 로그아웃
+                        break;
+                    }
+
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -81,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentMain = new MainFragment();
 
         //프래그먼트 매니저 획득
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         //프래그먼트 Transaction 획득
         //프래그먼트를 올리거나 교체하는 작업을 Transaction이라고 합니다.

@@ -2,19 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_info"
-        android:title="내 정보" />
+        android:id="@+id/item_reserve_seat"
+        android:title="좌석 예약" />
     <item
-        android:id="@+id/item_report"
-        android:title="리포트" />
+        android:id="@+id/item_reserve_classroom"
+        android:title="회의실 예약" />
     <item
-        android:id="@+id/item_setting"
-        android:title="계정 설정" />
+        android:id="@+id/item_seatinfo"
+        android:title="좌석배정현황" />
     <item
-        android:id="@+id/item_notice"
-        android:title="공지사항" />
+        android:id="@+id/item_report_seat"
+        android:title="좌석 신고" />
     <item
-        android:id="@+id/item_service_center"
-        android:title="고객센터" />
+        android:id="@+id/item_report_etc"
+        android:title="불편사항 신고" />
+    <item
+        android:id="@+id/item_message_developer"
+        android:title="개발자에게 연락하기" />
+    <item
+        android:id="@+id/item_logout"
+        android:title="로그아웃" />
 
 </menu>

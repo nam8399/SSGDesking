@@ -18,7 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Retrofit_client {
-    public static String BASE_URL = "http://192.168.189.32:80/api/v1/";
+//    public static String BASE_URL = "http://192.168.54.193:80/api/v1/";
+    public static String BASE_URL = "http://43.201.16.249:8080/api/v1/";
 
     public static Retrofit_interface getApiService(){return getStringApiClient().create(Retrofit_interface.class);}
 
