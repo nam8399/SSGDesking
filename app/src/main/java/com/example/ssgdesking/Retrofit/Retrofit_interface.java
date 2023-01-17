@@ -24,6 +24,9 @@ public interface Retrofit_interface {
     @POST("review")
     Call<String> postReview(@Body ReviewData reviewData);
 
+    @GET("search/searchSeat/{name}")
+    Call<String> getNameInfo(@Path("name") String name);
+
     @POST("user/empseat")
     Call<String> getEmpSeat(@Body LoginData loginData);
 

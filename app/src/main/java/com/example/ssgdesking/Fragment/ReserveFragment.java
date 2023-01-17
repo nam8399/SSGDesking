@@ -33,6 +33,7 @@ import com.example.ssgdesking.Retrofit.Retrofit_client;
 import com.example.ssgdesking.View.ProgressDialog;
 import com.example.ssgdesking.View.ReserveAfterDialog;
 import com.example.ssgdesking.View.ReserveBeforeDialog;
+import com.example.ssgdesking.View.SearchDialog;
 import com.example.ssgdesking.databinding.FragmentReserveBinding;
 
 import org.json.JSONArray;
@@ -287,6 +288,8 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(),"검색 기능 클릭",Toast.LENGTH_SHORT).show();
+                SearchDialog searchDialog = new SearchDialog(getContext());
+                searchDialog.show();
             }
         });
 

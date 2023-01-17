@@ -3,13 +3,11 @@ package com.example.ssgdesking.Data
 class SearchData {
     constructor()
 
-    var book : String? = ""
-    var name : String?  = ""
-    var deptid : String?  = ""
-    var start : String?  = ""
-    var seatid : String?  = ""
-    var end : String?  = ""
+    var ename : String? = ""
     var location : String?  = ""
     var section : String?  = ""
+    var seatid : String?  = ""
+    var id : String?  = ""
+    var dname : String?  = ""
     var floor : String?  = ""
 }

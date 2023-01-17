@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:orientation="vertical"
         android:background="@drawable/view_round_white_6"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
-                android:text="15층 1-1"
+                android:text="직원 검색"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
@@ -55,71 +55,47 @@
                 android:gravity="center">
             </ImageView>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/card3">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="#D80C18"
-                    android:gravity="center"
-                    android:text="근무중"
-                    android:padding="5dp">
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/card4">
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="#E5E5E5"
-                    android:gravity="center"
-                    android:text="휴무"
-                    android:padding="5dp">
-                </TextView>
-            </LinearLayout>
-
-        </LinearLayout>
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/icon_profile"
-            android:layout_gravity="center">
-        </ImageView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/seat_deptname"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="어디어디부서"
-                android:layout_marginLeft="20dp">
-            </TextView>
-            <TextView
-                android:id="@+id/seat_name"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp">
+                </ImageView>
+                <EditText
+                    android:id="@+id/search_name"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:hint="직원 이름 검색"
+                    android:theme="@style/login_edit"
+                    android:inputType="textPersonName"
+                    android:gravity="center">
+                </EditText>
+                <ImageView
+                    android:id="@+id/search_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icon_search">
+                </ImageView>
+            </LinearLayout>
+            <ListView
+                android:id="@+id/search_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="홍길동 사원"
-                android:textColor="@color/black"
-                android:textSize="25dp"
-                android:layout_marginLeft="20dp">
-            </TextView>
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+            </ListView>
         </LinearLayout>
     </LinearLayout>
 
