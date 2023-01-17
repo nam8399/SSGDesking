@@ -14,16 +14,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.ssgdesking.Activity.LoginActivity;
-import com.example.ssgdesking.Data.LoginData;
-import com.example.ssgdesking.Data.ReservationDTO;
-import com.example.ssgdesking.Data.ReserveInfoData;
 import com.example.ssgdesking.Data.ReviewData;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.Retrofit.Retrofit_client;
 import com.example.ssgdesking.databinding.FragmentReserveLeaveSuccessBinding;
-import com.example.ssgdesking.databinding.FragmentReserveSuccessBinding;
-
-import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;

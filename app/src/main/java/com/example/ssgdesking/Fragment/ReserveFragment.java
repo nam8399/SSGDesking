@@ -6,10 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -17,7 +13,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,7 +34,6 @@ import com.example.ssgdesking.View.ProgressDialog;
 import com.example.ssgdesking.View.ReserveAfterDialog;
 import com.example.ssgdesking.View.ReserveBeforeDialog;
 import com.example.ssgdesking.databinding.FragmentReserveBinding;
-import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1072,11 +1066,15 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
                     for (ReservationDTO dto : viewItems) {
                         if (dto.getSection().equals(reserveInfoData.getSection()) &&
-                                dto.getLocation().equals(reserveInfoData.getLocation()) &&
-                                reserveInfoData.getOccupied().equals("true")) {
-                            setReserveColorBlue(dto.getSection(), dto.getLocation());
-                            isReserve = true; // 내 예약 여부 확인
-                            MY_SEAT_ID = dto.getId();
+                                dto.getLocation().equals(reserveInfoData.getLocation())) {
+                            if (reserveInfoData.getOccupied().equals("true")) {
+                                setReserveColorBlue(dto.getSection(), dto.getLocation());
+                                isReserve = true; // 내 예약 여부 확인
+                                MY_SEAT_ID = dto.getId();
+                            } else {
+                                MY_SEAT_ID = dto.getId();
+                            }
+
                         }
                     }
 

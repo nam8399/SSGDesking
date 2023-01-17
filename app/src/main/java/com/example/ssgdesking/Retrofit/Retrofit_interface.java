@@ -3,6 +3,7 @@ package com.example.ssgdesking.Retrofit;
 import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.Data.ReservationEreportData;
 import com.example.ssgdesking.Data.ReservationLoginData;
+import com.example.ssgdesking.Data.ReservationReportData;
 import com.example.ssgdesking.Data.ReviewData;
 
 import retrofit2.Call;
@@ -37,4 +38,7 @@ public interface Retrofit_interface {
 
     @POST("ereport")
     Call<String> reserveEreportPost(@Body ReservationEreportData reservationEreportData);
+
+    @POST("report")
+    Call<String> reserveReportPost(@Body ReservationReportData ReservationReportData);
 }

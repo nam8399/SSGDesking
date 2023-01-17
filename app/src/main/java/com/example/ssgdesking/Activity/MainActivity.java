@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.example.ssgdesking.Fragment.MainFragment;
 import com.example.ssgdesking.Fragment.ReserveEReportFragment;
 import com.example.ssgdesking.Fragment.ReserveFragment;
 import com.example.ssgdesking.Fragment.ReserveInfoFragment;
+import com.example.ssgdesking.Fragment.ReserveReportFragment;
 import com.example.ssgdesking.Interface.onBackPressedListener;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.databinding.ActivityMainBinding;
@@ -75,43 +77,54 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.item_reserve_classroom:{ // 회의실 예약
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://go.microsoft.com/fwlink/p/?LinkID=2085000&clcid=0x412&culture=ko-kr&country=KR"));
+                        startActivity(myIntent);
                         break;
                     }
                     case R.id.item_seatinfo:{ // 좌석배정현황
                         ReserveInfoFragment reserveInfoFragment = ReserveInfoFragment.getInstance();
                         fragmentManager = getSupportFragmentManager();
-
-                        //프래그먼트 Transaction 획득
-                        //프래그먼트를 올리거나 교체하는 작업을 Transaction이라고 합니다.
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        //프래그먼트를 FrameLayout의 자식으로 등록해줍니다.
                         fragmentTransaction.replace(R.id.fragmentFrame, reserveInfoFragment);
-                        //commit을 하면 자식으로 등록된 프래그먼트가 화면에 보여집니다.
                         fragmentTransaction.commit();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     }
                     case R.id.item_report_seat:{ // 좌석 신고
+                        ReserveReportFragment reserveReportFragment = ReserveReportFragment.getInstance();
+                        fragmentManager = getSupportFragmentManager();
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentFrame, reserveReportFragment);
+                        fragmentTransaction.commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     }
                     case R.id.item_report_etc:{ // 불편사항 신고
                         ReserveEReportFragment reserveEReportFragment = ReserveEReportFragment.getInstance();
                         fragmentManager = getSupportFragmentManager();
 
-                        //프래그먼트 Transaction 획득
-                        //프래그먼트를 올리거나 교체하는 작업을 Transaction이라고 합니다.
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        //프래그먼트를 FrameLayout의 자식으로 등록해줍니다.
                         fragmentTransaction.replace(R.id.fragmentFrame, reserveEReportFragment);
-                        //commit을 하면 자식으로 등록된 프래그먼트가 화면에 보여집니다.
                         fragmentTransaction.commit();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                     }
                     case R.id.item_message_developer:{ // 개발자에게 연락하기
+                        Intent email = new Intent(Intent.ACTION_SEND);
+                        email.setType("plain/text");
+                        String[] address = {"slondy1012@gmail.com"};
+                        email.putExtra(Intent.EXTRA_EMAIL, address);
+                        email.putExtra(Intent.EXTRA_SUBJECT, "[I&C DESK 문의]");
+                        email.putExtra(Intent.EXTRA_TEXT, "문의사항을 입력해주세요.");
+                        startActivity(email);
                         break;
                     }
                     case R.id.item_logout:{ // 로그아웃
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                         break;
                     }
 

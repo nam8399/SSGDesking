@@ -1,49 +1,29 @@
 package com.example.ssgdesking.Fragment;
 
-import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.ssgdesking.Adapter.CustomSpinnerAdapter;
 import com.example.ssgdesking.Data.ReservationDTO;
-import com.example.ssgdesking.Data.ReserveCommentData;
 import com.example.ssgdesking.Data.RetrofitSeatData;
 import com.example.ssgdesking.Interface.onBackPressedListener;
 import com.example.ssgdesking.R;
-import com.example.ssgdesking.Retrofit.Retrofit_client;
 import com.example.ssgdesking.View.ProgressDialog;
-import com.example.ssgdesking.View.ReserveAfterDialog;
-import com.example.ssgdesking.View.ReserveBeforeDialog;
 import com.example.ssgdesking.databinding.FragmentReserve21Binding;
-import com.example.ssgdesking.databinding.FragmentReserveBinding;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Reserve21Fragment extends Fragment implements onBackPressedListener {
     private FragmentReserve21Binding binding;

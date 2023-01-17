@@ -63,19 +63,31 @@
                 android:gravity="center">
             </TextView>
             <TextView
-                android:id="@+id/reserve_ereport_number"
+                android:id="@+id/reserve_report_seatid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="신고번호 [12345]로"
+                android:text="15F D-29"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textColor="#D80C18"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center">
+            </TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="좌석에 대한 신고가"
                 android:textSize="18sp"
                 android:textColor="#D80C18"
                 android:layout_marginTop="10dp"
                 android:gravity="center">
             </TextView>
             <TextView
+                android:id="@+id/reserve_report_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="신고내용이 접수되었습니다."
+                android:text="신고번호 [12345]로 접수되었습니다."
                 android:textSize="18sp"
                 android:textColor="#D80C18"
                 android:layout_marginTop="10dp"
@@ -84,20 +96,10 @@
 
         </LinearLayout>
     </LinearLayout>
-    <TextView
-        android:layout_width="290dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center_horizontal"
-        android:textSize="17sp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:gravity="center">
-    </TextView>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="100dp">
         <TextView
             android:id="@+id/reserve_ereport_cancel"
             android:layout_width="120dp"

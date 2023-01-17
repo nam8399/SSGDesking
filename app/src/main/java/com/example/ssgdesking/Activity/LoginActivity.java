@@ -9,9 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.Data.ReservationLoginData;
-import com.example.ssgdesking.Data.RetrofitSeatData;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.Retrofit.Retrofit_client;
 import com.example.ssgdesking.View.ProgressDialog;
@@ -19,7 +17,6 @@ import com.example.ssgdesking.databinding.ActivityLoginBinding;
 
 import org.json.JSONObject;
 
-import okhttp3.CookieJar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

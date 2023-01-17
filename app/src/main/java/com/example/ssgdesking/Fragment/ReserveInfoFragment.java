@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ssgdesking.Activity.LoginActivity;
-import com.example.ssgdesking.Activity.ReserveResultActivity;
 import com.example.ssgdesking.Data.LoginData;
 import com.example.ssgdesking.R;
 import com.example.ssgdesking.Retrofit.Retrofit_client;
