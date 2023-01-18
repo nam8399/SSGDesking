@@ -245,7 +245,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     private void initSpinner() {
         spinner = binding.spinner;
 
-        // 스피너 안에 넣을 데이터 임의 생성
+        list.clear();
         list.add("19F");
         list.add("21F");
 
@@ -287,7 +287,6 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         binding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"검색 기능 클릭",Toast.LENGTH_SHORT).show();
                 SearchDialog searchDialog = new SearchDialog(getContext());
                 searchDialog.show();
             }
@@ -365,7 +364,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "1";
                 break;
             }
@@ -373,7 +372,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1912.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "2";
                 break;
             }
@@ -381,7 +380,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1913.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "3";
                 break;
             }
@@ -389,7 +388,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1914.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "4";
                 break;
             }
@@ -397,7 +396,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1915.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "5";
                 break;
             }
@@ -405,7 +404,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1916.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "6";
                 break;
             }
@@ -413,7 +412,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1917.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "7";
                 break;
             }
@@ -421,7 +420,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1918.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "8";
                 break;
             }
@@ -429,7 +428,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor1919.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "9";
                 break;
             }
@@ -437,7 +436,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor19110.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "10";
                 break;
             }
@@ -445,7 +444,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor19111.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "11";
                 break;
             }
@@ -453,7 +452,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
             {
                 startThread();
                 binding.floor19112.setBackgroundResource(R.drawable.reserve_seat_green);
-                section = "challenge";
+                section = "meritocracy";
                 location = "12";
                 break;
             }
@@ -959,11 +958,14 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                     Log.d("좌석 예약여부 확인 : ", dto.getOccupied());
                 }
 
-                if (isReserve && dto.getOccupied().equals("true")) { // 좌석에 앉는 사람이 있울 시
+                if (isReserve && dto.getOccupied().equals("true") && dto.getFixed().equals("false")) { // 좌석에 앉는 사람이 있울 시
                     getReserveData(dto.getId(), reserve_title, dto);
-                } else if(isReserve && dto.getOccupied().equals("false")) { // 좌석이 비어있을 시
+                } else if(isReserve && dto.getOccupied().equals("false") && dto.getFixed().equals("false")) { // 좌석이 비어있을 시
                     getReviewData(dto.getId(), reserve_title, dto);
-                    // 임의의 데이터입니다.
+                } else if (isReserve && dto.getFixed().equals("true")) {
+                    Toast.makeText(getContext(), "고정 좌석입니다.", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    setReserveColorPurple(dto.getSection(), dto.getLocation());
                 }
             }
 
@@ -1182,7 +1184,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
     private void setReserveColorRed(String section, String location) {
         switch (section) {
-            case "challenge":
+            case "meritocracy":
             {
                 if (location.equals("1")) {
                     binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_red);
@@ -1300,6 +1302,18 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_red);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19313.setBackgroundResource(R.drawable.reserve_seat_red);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19314.setBackgroundResource(R.drawable.reserve_seat_red);
+                    break;
+                } else if (location.equals("15")) {
+                    binding.floor19315.setBackgroundResource(R.drawable.reserve_seat_red);
+                    break;
+                } else if (location.equals("16")) {
+                    binding.floor19316.setBackgroundResource(R.drawable.reserve_seat_red);
+                    break;
                 }
             }
             case "innovation":
@@ -1340,6 +1354,12 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_red);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19413.setBackgroundResource(R.drawable.reserve_seat_red);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19414.setBackgroundResource(R.drawable.reserve_seat_red);
+                    break;
                 }
             }
 
@@ -1348,7 +1368,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
     private void setReserveColorBlue(String section, String location) {
         switch (section) {
-            case "challenge":
+            case "meritocracy":
             {
                 if (location.equals("1")) {
                     binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_blue);
@@ -1466,6 +1486,18 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19313.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19314.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
+                } else if (location.equals("15")) {
+                    binding.floor19315.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
+                } else if (location.equals("16")) {
+                    binding.floor19316.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
                 }
             }
             case "innovation":
@@ -1506,6 +1538,12 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_blue);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19413.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19414.setBackgroundResource(R.drawable.reserve_seat_blue);
+                    break;
                 }
             }
 
@@ -1514,7 +1552,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
     private void setReserveColorPurple(String section, String location) {
         switch (section) {
-            case "challenge":
+            case "meritocracy":
             {
                 if (location.equals("1")) {
                     binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_purple);
@@ -1632,6 +1670,18 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_purple);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19313.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19314.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("15")) {
+                    binding.floor19315.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("16")) {
+                    binding.floor19316.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
                 }
             }
             case "innovation":
@@ -1672,6 +1722,12 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_purple);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19413.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19414.setBackgroundResource(R.drawable.reserve_seat_purple);
+                    break;
                 }
             }
 
@@ -1680,7 +1736,7 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
     private void setReserveColorGray(String section, String location) {
         switch (section) {
-            case "challenge":
+            case "meritocracy":
             {
                 if (location.equals("1")) {
                     binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_gray);
@@ -1798,6 +1854,18 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                 } else if (location.equals("12")) {
                     binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_gray);
                     break;
+                } else if (location.equals("13")) {
+                    binding.floor19313.setBackgroundResource(R.drawable.reserve_seat_gray);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19314.setBackgroundResource(R.drawable.reserve_seat_gray);
+                    break;
+                } else if (location.equals("15")) {
+                    binding.floor19315.setBackgroundResource(R.drawable.reserve_seat_gray);
+                    break;
+                } else if (location.equals("16")) {
+                    binding.floor19316.setBackgroundResource(R.drawable.reserve_seat_gray);
+                    break;
                 }
             }
             case "innovation":
@@ -1837,6 +1905,12 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
                     break;
                 } else if (location.equals("12")) {
                     binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_gray);
+                    break;
+                } else if (location.equals("13")) {
+                    binding.floor19413.setBackgroundResource(R.drawable.reserve_seat_gray);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19414.setBackgroundResource(R.drawable.reserve_seat_gray);
                     break;
                 }
             }

@@ -107,17 +107,18 @@
                 android:layout_marginRight="30dp"
                 android:textSize="15dp"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="19층">
             </TextView>
             <TextView
+                android:id="@+id/reserve_possible"
                 android:layout_width="180dp"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textSize="25dp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="11석 사용가능">
@@ -131,8 +132,8 @@
                 android:textSize="15dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:text="총 36석">
+                android:textColor="@color/white"
+                android:text="총 54석">
             </TextView>
             <View
                 android:layout_width="match_parent"
@@ -152,6 +153,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:layout_gravity="center"
+                android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="예약하기"/>
 
@@ -167,6 +169,7 @@
         </TextView>
 
         <LinearLayout
+            android:id="@+id/reserve_classroom"
             android:layout_width="270dp"
             android:layout_height="44dp"
             android:background="@drawable/card2"
@@ -182,25 +185,14 @@
             </TextView>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/reserve_status"
             android:layout_width="270dp"
             android:layout_height="44dp"
             android:background="@drawable/card2"
-            android:layout_margin="10dp"
-            android:elevation="5dp">
-            <TextView
-                android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="사물함 예약"
-                android:textColor="@color/black">
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="44dp"
-            android:background="@drawable/card2"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
             android:elevation="5dp">
             <TextView
                 android:layout_marginLeft="15dp"

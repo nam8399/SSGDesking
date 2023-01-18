@@ -15,6 +15,9 @@ import retrofit2.http.Path;
 public interface Retrofit_interface {
 
 
+    @GET("reservation/{floor}")
+    Call<String> getFloorInfo(@Path("floor") String floor);
+
     @GET("reservation/seat/{post}")
     Call<String> getPostsString(@Path("post") String post);
 
