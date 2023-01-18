@@ -85,6 +85,11 @@
             android:id="@+id/reserve_leave_edittext"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="top"
             android:background="@drawable/reserve_report">
         </EditText>
     </LinearLayout>
