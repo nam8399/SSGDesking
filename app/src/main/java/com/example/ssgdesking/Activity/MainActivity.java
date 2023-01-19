@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                     case R.id.item_reserve_classroom:{ // 회의실 예약
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://go.microsoft.com/fwlink/p/?LinkID=2085000&clcid=0x412&culture=ko-kr&country=KR"));
+                        Intent myIntent = getPackageManager().getLaunchIntentForPackage("com.microsoft.teams");
                         startActivity(myIntent);
                         break;
                     }

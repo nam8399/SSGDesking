@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -175,6 +176,18 @@ public class SearchDialog extends Dialog {
                         searchListAdapter = new SearchListAdapter(getContext(), searchItems);
                         ListView listView = findViewById(R.id.search_listview);
                         listView.setAdapter(searchListAdapter);
+
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                Log.d("SearchDialog", "section : " +
+                                        searchItems.get(i).getSection() +", location : " + searchItems.get(i).getLocation());
+                                ReserveFragment.isSearchClick = true;
+                                ReserveFragment.SearchSection = searchItems.get(i).getSection();
+                                ReserveFragment.SearchLocation = searchItems.get(i).getLocation();
+                                dismiss();
+                            }
+                        });
 
 
                         Handler handler = new Handler(Looper.getMainLooper());

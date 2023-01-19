@@ -101,7 +101,7 @@ public class MainFragment extends Fragment {
         binding.reserveClassroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://go.microsoft.com/fwlink/p/?LinkID=2085000&clcid=0x412&culture=ko-kr&country=KR"));
+                Intent myIntent = getActivity().getPackageManager().getLaunchIntentForPackage("com.microsoft.teams");
                 startActivity(myIntent);
             }
         });

@@ -72,6 +72,10 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     ArrayList<ReviewData> reviewItems;
     Call<RetrofitSeatData> call;
     private final String TAG = this.getClass().getSimpleName();
+    private SearchDialog searchDialog;
+    public static boolean isSearchClick = false;
+    public static String SearchSection = "";
+    public static String SearchLocation = "";
 
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -103,7 +107,6 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentReserveBinding.inflate(inflater);
-
 
         controller();
 
@@ -283,14 +286,25 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
         pref = getActivity().getSharedPreferences("pref", Activity.MODE_PRIVATE);
         editor = pref.edit();
         mainFragment = new MainFragment();
+        searchDialog = new SearchDialog(getContext());
 
         binding.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchDialog searchDialog = new SearchDialog(getContext());
                 searchDialog.show();
             }
         });
+
+        searchDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if (isSearchClick) {
+                    isSearchClick = false;
+                    setReserveColorGreen(SearchSection, SearchLocation);
+                }
+            }
+        });
+
 
         binding.btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1365,6 +1379,191 @@ public class ReserveFragment extends Fragment implements onBackPressedListener, 
 
         }
     }
+
+    public void setReserveColorGreen(String section, String location) {
+        switch (section) {
+            case "meritocracy":
+            {
+                if (location.equals("1")) {
+                    binding.floor1911.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1912.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1913.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1914.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1915.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1916.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1917.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1918.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1919.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19110.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19111.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19112.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                }
+            }
+            case "collaboration":
+            {
+                if (location.equals("1")) {
+                    binding.floor1921.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1922.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1923.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1924.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1925.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1926.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1927.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1928.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1929.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19210.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19211.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19212.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                }
+            }
+            case "fun":
+            {
+                if (location.equals("1")) {
+                    binding.floor1931.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1932.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1933.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1934.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1935.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1936.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1937.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1938.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1939.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19310.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19311.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19312.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("13")) {
+                    binding.floor19313.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19314.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("15")) {
+                    binding.floor19315.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("16")) {
+                    binding.floor19316.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                }
+            }
+            case "innovation":
+            {
+                if (location.equals("1")) {
+                    binding.floor1941.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("2")) {
+                    binding.floor1942.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("3")) {
+                    binding.floor1943.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("4")) {
+                    binding.floor1944.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("5")) {
+                    binding.floor1945.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("6")) {
+                    binding.floor1946.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("7")) {
+                    binding.floor1947.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("8")) {
+                    binding.floor1948.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("9")) {
+                    binding.floor1949.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("10")) {
+                    binding.floor19410.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("11")) {
+                    binding.floor19411.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("12")) {
+                    binding.floor19412.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("13")) {
+                    binding.floor19413.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                } else if (location.equals("14")) {
+                    binding.floor19414.setBackgroundResource(R.drawable.reserve_seat_green);
+                    break;
+                }
+            }
+
+        }
+    }
+
 
     private void setReserveColorBlue(String section, String location) {
         switch (section) {

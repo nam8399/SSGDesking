@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -74,6 +75,7 @@ public class ReserveReportFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         //로딩창을 투명하게
         progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        binding.reserveEreportEdittext.setText("");
 
     }
 
@@ -106,6 +108,7 @@ public class ReserveReportFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ReserveFragment reserveFragment = ReserveFragment.getInstance();
                 fragmentTransaction.replace(R.id.fragmentFrame, reserveFragment).commit();
+                Toast.makeText(getContext(), "신고 정보가 작성되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

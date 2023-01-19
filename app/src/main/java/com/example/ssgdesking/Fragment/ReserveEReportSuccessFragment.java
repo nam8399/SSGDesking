@@ -73,6 +73,7 @@ public class ReserveEReportSuccessFragment extends Fragment {
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragmentFrame, reserveFragment).commit();
+                Toast.makeText(getContext(), "신고 정보가 작성되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }

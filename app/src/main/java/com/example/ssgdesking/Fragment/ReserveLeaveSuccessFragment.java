@@ -80,6 +80,7 @@ public class ReserveLeaveSuccessFragment extends Fragment {
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragmentFrame, reserveFragment).commit();
+                Toast.makeText(getContext(), "후기 정보가 작성되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }
