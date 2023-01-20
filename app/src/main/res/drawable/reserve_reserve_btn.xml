@@ -21,7 +21,7 @@
 
         <path
             android:pathData="M15.5 0H75.5C84.0604 0 91 6.93959 91 15.5C91 24.0604 84.0604 31 75.5 31H15.5C6.93959 31 0 24.0604 0 15.5C0 6.93959 6.93959 0 15.5 0Z"
-            android:strokeWidth="3"
+            android:strokeWidth="1"
             android:strokeColor="#000000"
             />
 

@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 왼쪽 상단 버튼 만들기
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_sidemenu); //왼쪽 상단 버튼 아이콘 지정
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.icon_sidemenu); //왼쪽 상단 버튼 아이콘 지정
 
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);

@@ -108,7 +108,6 @@ public class ReserveReportFragment extends Fragment {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ReserveFragment reserveFragment = ReserveFragment.getInstance();
                 fragmentTransaction.replace(R.id.fragmentFrame, reserveFragment).commit();
-                Toast.makeText(getContext(), "신고 정보가 작성되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -176,6 +175,7 @@ public class ReserveReportFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
                     fragmentTransaction.replace(R.id.fragmentFrame, reserveReportSuccessFragment).commit();
+                    binding.reserveEreportEdittext.setText(null);
 
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {

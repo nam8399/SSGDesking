@@ -149,7 +149,7 @@ public class ReserveEReportFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
                     fragmentTransaction.replace(R.id.fragmentFrame, reserveEReportSuccessFragment).commit();
-
+                    binding.reserveEreportEdittext.setText(null);
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         @Override

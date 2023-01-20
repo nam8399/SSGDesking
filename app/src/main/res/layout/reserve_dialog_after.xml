@@ -34,7 +34,7 @@
                 android:id="@+id/seat_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:text="15층 1-1"
                 android:textSize="20dp"
                 android:textColor="@color/black"
@@ -52,7 +52,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/icon_cancel"
-                android:gravity="center">
+                android:gravity="right">
             </ImageView>
         </LinearLayout>
 

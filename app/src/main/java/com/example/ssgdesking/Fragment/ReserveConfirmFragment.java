@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ssgdesking.Activity.LoginActivity;
 import com.example.ssgdesking.Activity.ReserveResultActivity;
@@ -131,25 +132,31 @@ public class ReserveConfirmFragment extends Fragment implements onBackPressedLis
                 String checkAlready = response.body();
                 Log.d("연결이 성공적 : ", response.body().toString());
 
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                if (response.body().contains("같은 자리를")) {
+                    Toast.makeText(getContext(), "같은 자리를 3번 이상 연속하여 예약할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
 
-                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                    Bundle bundle = new Bundle(); // 번들을 통해 값 전달
 
-                Handler handler = new Handler(Looper.getMainLooper());
-                progressDialog.show();
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    progressDialog.show();
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.dismiss();
-                        bundle.putString("SeatNumber", reserveResultActivity.reserveInfo);
-                        bundle.putString("SeatTime", mFormat_bundle.format(cal.getTime()));
-                        reserveSuccessFragment.setArguments(bundle);
-                        fragmentTransaction.replace(R.id.fragmentFrame, reserveSuccessFragment).commit();
-                    }
-                });
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                            bundle.putString("SeatNumber", reserveResultActivity.reserveInfo);
+                            bundle.putString("SeatTime", mFormat_bundle.format(cal.getTime()));
+                            reserveSuccessFragment.setArguments(bundle);
+                            fragmentTransaction.replace(R.id.fragmentFrame, reserveSuccessFragment).commit();
+                        }
+                    });
+                }
+
+
             }
             @Override
             public void onFailure(Call<String> call, Throwable t) {
