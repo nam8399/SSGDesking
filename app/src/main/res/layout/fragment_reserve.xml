@@ -96,78 +96,78 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_2"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_3"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_4"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_5"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_6"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_1"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_2"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_3"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_4"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_5"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_6"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                     </LinearLayout>
                     <LinearLayout
@@ -178,78 +178,78 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_8"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_9"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_10"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_11"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_1_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_7"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_8"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_9"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_10"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_11"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_2_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                     </LinearLayout>
                 </LinearLayout>
@@ -271,45 +271,45 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_2"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_3"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_4"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_1"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_2"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_3"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                     </LinearLayout>
                     <LinearLayout
@@ -320,45 +320,45 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_6"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_7"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_8"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_4"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_5"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_6"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                     </LinearLayout>
                 </LinearLayout>
@@ -380,50 +380,50 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_10"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_11"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_7"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_8"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_9"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_10"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                     </LinearLayout>
                     <LinearLayout
@@ -434,50 +434,50 @@
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="5dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_14"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_15"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_3_16"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_11"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
                             android:layout_marginLeft="25dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_12"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_13"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                         <Button
                             android:id="@+id/floor_19_4_14"
                             android:layout_width="37dp"
                             android:layout_height="37dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </Button>
                     </LinearLayout>
                 </LinearLayout>
@@ -498,7 +498,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_marginTop="3dp"
-                            android:background="@drawable/reserve_seat_red">
+                            android:background="@drawable/reserve_seat_occupied">
                         </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
